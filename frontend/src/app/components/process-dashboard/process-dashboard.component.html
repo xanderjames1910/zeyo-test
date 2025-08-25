@@ -1,0 +1,71 @@
+<div class="container">
+  <h2>Registro de Procesos</h2>
+  <form (ngSubmit)="createProcess()">
+    <div class="form-group">
+      <label for="name">Nombre:</label>
+      <input
+        id="name"
+        type="text"
+        [(ngModel)]="newProcess.name"
+        name="name"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="description">Descripción:</label>
+      <textarea
+        id="description"
+        [(ngModel)]="newProcess.description"
+        name="description"
+        required
+      ></textarea>
+    </div>
+    <button type="submit">Crear Proceso</button>
+  </form>
+
+  <hr />
+
+  <h2>Catálogo de Procesos</h2>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let process of processes">
+          <td>{{ process.name }}</td>
+          <td>{{ process.description }}</td>
+          <td>
+            <button (click)="showHistory(process.id)">Ver Historial</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="selectedHistory">
+    <h3>Historial de Trazabilidad</h3>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Acción</th>
+            <th>Fecha</th>
+            <th>Hash</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let history of selectedHistory">
+            <td>{{ history.action }}</td>
+            <td>{{ history.timestamp | date : "medium" }}</td>
+            <td class="hash-cell">{{ history.current_hash }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
